@@ -1,13 +1,21 @@
 html {}
 
 .sidemenu {
-    background-color: #D4D0C8;
+    background-color: #6A6864;
     height: 100vh;
-    width: 20%;
+    width: 250px;
 }
 
 .main {
-    background-color: #06BAC5;
+    /*  background-color: #06BAC5;*/
     width: 100%;
     min-height: 100vh;
 }
+
+.logo {
+    display: block;
+    margin: auto;
+    height: 70px !important;
+}
+
+.img-bord {}
