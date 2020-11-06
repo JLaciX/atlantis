@@ -23,8 +23,21 @@
 .widget {
     min-height: 100px !important;
     border: 1px solid black;
+    background-color: rgba(255, 255, 255, .1);
 }
 
 .img-icon {
     height: 50px !important;
+}
+
+.widget-ico {
+    height: 40px !important;
+    margin: 10px auto 5px auto;
+    display: block;
+}
+
+.widget p {
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
