@@ -8,6 +8,7 @@
     /*  background-color: #06BAC5;*/
     width: 100%;
     min-height: 100vh;
+    background-color: grey;
 }
 
 .logo {
@@ -40,4 +41,16 @@
     color: white;
     font-weight: bold;
     text-align: center;
+}
+
+.tartalom {
+    position: absolute;
+    left: 250px;
+    top: 0px;
+    height: 100vh;
+    min-width: 600px;
+}
+
+#sortable>div {
+    float: left;
 }
