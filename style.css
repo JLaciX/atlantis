@@ -51,7 +51,11 @@
     min-width: 600px;
 }
 
-#sortable>div {
+.sub>div {
+    float: left;
+}
+
+.sub {
     float: left;
 }
 

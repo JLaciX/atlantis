@@ -20,8 +20,7 @@
                     <div class="col-6 widget rounded draggable"><img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
                         <p>Fénykép</p>
                     </div>
-                    <div class="col-6 widget rounded draggable"><img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
-                        <p>Fénykép</p>
+                    <div class="col-6 widget rounded draggable">
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
@@ -39,15 +38,23 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function() {
+        $(function refresh() {
             $(".sortable").sortable({
                 revert: true,
                 connectWith: ".column",
                 stop: function(e, ui) {
 
                     ui.item.removeClass("col-6");
-                    ui.item.addClass("col-12");
-
+                    ui.item.removeClass("draggable");
+                    if ($(e.target).hasClass('col-12')) {
+                        ui.item.removeAttr("style");
+                        ui.item.addClass("col-2");
+                        ui.item.addClass("sub");
+                    } else {
+                        ui.item.addClass("col-12");
+                    }
+                    ui.item.addClass("sortable");
+                    refresh();
                 }
             });
             $(".draggable").draggable({
