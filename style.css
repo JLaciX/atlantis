@@ -59,6 +59,4 @@
     float: left;
 }
 
-.ui-helper {
-    width: 100% !important;
-}
+.sizeable {}

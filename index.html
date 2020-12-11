@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <title>Atlantisz CMS</title>
 </head>
 
@@ -22,14 +23,16 @@
                     </div>
                     <div class="col-6 widget rounded draggable">
                     </div>
-                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded resizable"></div>
                     <div class="col-6 widget rounded"></div>
                 </div>
             </div>
 
 
         </div>
-        <div class="tartalom sortable"></div>
+        <div class="container-fluid tartalom sortable">
+            <div class="row"></div>
+        </div>
     </div>
 
     <script src="jquery/jquery.js"></script>
@@ -39,8 +42,14 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function refresh() {
+            var unit = $(".col-12").width() / 12;
+            console.log(unit);
+            $(".resizable").resizable({
+                grid: unit,
+
+            });
             $(".sortable").sortable({
-                revert: true,
+                //revert: true,
                 connectWith: ".column",
                 stop: function(e, ui) {
 
@@ -48,8 +57,9 @@
                     ui.item.removeClass("draggable");
                     if ($(e.target).hasClass('col-12')) {
                         ui.item.removeAttr("style");
-                        ui.item.addClass("col-2");
+                        ui.item.css("width", $(".col-12").width() / 12);
                         ui.item.addClass("sub");
+                        ui.item.addClass("resizable");
                     } else {
                         ui.item.addClass("col-12");
                     }
@@ -60,14 +70,17 @@
             $(".draggable").draggable({
                 connectToSortable: ".sortable",
                 helper: "clone",
-                revert: "invalid",
+                //revert: "invalid", ez felel az animálásért
+
                 start: function(event, ui) {
                     $(ui.helper).addClass("ui-helper");
                 }
 
 
             });
+
             $("div").disableSelection();
+            console.log("működik");
         });
     </script>
 </body>
