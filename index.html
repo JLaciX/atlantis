@@ -17,10 +17,12 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div id="draggable" class="col-6 widget rounded"><img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
+                    <div class="col-6 widget rounded draggable"><img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
                         <p>Fénykép</p>
                     </div>
-                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded draggable"><img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
+                        <p>Fénykép</p>
+                    </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
                 </div>
@@ -28,7 +30,7 @@
 
 
         </div>
-        <div id="sortable" class="tartalom"></div>
+        <div class="tartalom sortable"></div>
     </div>
 
     <script src="jquery/jquery.js"></script>
@@ -38,16 +40,27 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function() {
-            $("#sortable").sortable({
+            $(".sortable").sortable({
                 revert: true,
                 connectWith: ".column",
+                stop: function(e, ui) {
+
+                    ui.item.removeClass("col-6");
+                    ui.item.addClass("col-12");
+
+                }
             });
-            $("#draggable").draggable({
-                connectToSortable: "#sortable",
+            $(".draggable").draggable({
+                connectToSortable: ".sortable",
                 helper: "clone",
-                revert: "invalid"
+                revert: "invalid",
+                start: function(event, ui) {
+                    $(ui.helper).addClass("ui-helper");
+                }
+
+
             });
-            $("ul, li").disableSelection();
+            $("div").disableSelection();
         });
     </script>
 </body>

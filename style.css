@@ -54,3 +54,7 @@
 #sortable>div {
     float: left;
 }
+
+.ui-helper {
+    width: 100% !important;
+}
