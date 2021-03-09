@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-6 widget rounded draggable">
                     </div>
-                    <div class="col-6 widget rounded resizable"></div>
+                    <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
                 </div>
             </div>
@@ -63,8 +63,9 @@
                     } else {
                         ui.item.removeAttr("style");
                         ui.item.addClass("col-12");
+                        ui.item.addClass("sortable");
                     }
-                    ui.item.addClass("sortable");
+
                     refresh();
                 }
             });
