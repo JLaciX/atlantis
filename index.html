@@ -18,10 +18,13 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-6 widget rounded draggable"><img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
+                    <div class="col-6 widget rounded draggable">
+                        <img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
                         <p>Fénykép</p>
                     </div>
-                    <div class="col-6 widget rounded draggable">
+                    <div class="col-6 widget rounded draggable box">
+                        <img class="img-fluid widget-ico" src="img/box.png" alt="">
+                        <p>Doboz</p>
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
@@ -57,13 +60,21 @@
 
                     ui.item.removeClass("col-6");
                     ui.item.removeClass("draggable");
-                    if ($(e.target).hasClass('col-12')) {
+                    if (ui.item.hasClass("box")) {
+                        ui.item.removeClass("box");
+                        ui.item.html("");
+                    }
+                    if ($(e.target).hasClass('col-12') && !ui.item.hasClass("coltemp")) {
                         ui.item.removeAttr("style");
                         ui.item.css("width", $(".col-12").width() / 12);
                         ui.item.addClass("sub");
+                        ui.item.addClass("coltemp");
                         ui.item.addClass("resizable");
                     } else {
-                        ui.item.removeAttr("style");
+                        if (!ui.item.hasClass("coltemp")) {
+                            ui.item.removeAttr("style");
+                        }
+
                         ui.item.addClass("col-12");
                         ui.item.addClass("sortable");
                     }

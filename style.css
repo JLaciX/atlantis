@@ -2,6 +2,7 @@
     background-color: #060607;
     height: 100vh;
     width: 250px;
+    position: relative;
 }
 
 .main {
@@ -60,3 +61,9 @@
 }
 
 .sizeable {}
+
+.view {
+    position: absolute;
+    bottom: 0;
+    border: 1px solid red;
+}
