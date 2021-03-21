@@ -30,7 +30,15 @@
                     <div class="col-6 widget rounded"></div>
                 </div>
             </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-3"> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" src="img/computer.png" alt=""> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" src="img/tablet.png" alt=""> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" src="img/phone.png" alt=""> </div>
 
+                </div>
+            </div>
 
         </div>
         <div class="container-fluid tartalom sortable">
@@ -49,7 +57,7 @@
             console.log(unit);
             $(".resizable").resizable({
                 grid: unit,
-                containment: ".col-12",
+                // containment: ".col-12",
 
 
             });
@@ -60,6 +68,7 @@
 
                     ui.item.removeClass("col-6");
                     ui.item.removeClass("draggable");
+
                     if (ui.item.hasClass("box")) {
                         ui.item.removeClass("box");
                         ui.item.html("");
@@ -67,16 +76,19 @@
                     if ($(e.target).hasClass('col-12') && !ui.item.hasClass("coltemp")) {
                         ui.item.removeAttr("style");
                         ui.item.css("width", $(".col-12").width() / 12);
+
                         ui.item.addClass("sub");
+                        ui.item.addClass("subdrag");
                         ui.item.addClass("coltemp");
                         ui.item.addClass("resizable");
                     } else {
                         if (!ui.item.hasClass("coltemp")) {
                             ui.item.removeAttr("style");
                         }
-
+                        ui.item.css("display", "table");
                         ui.item.addClass("col-12");
                         ui.item.addClass("sortable");
+                        ui.item.addClass("resizable");
                     }
 
                     refresh();
@@ -93,6 +105,15 @@
 
 
             });
+            /*$(".subdrag").draggable({
+                // connectToSortable: ".sortable",
+                // helper: "clone",
+                //revert: "invalid", ez felel az animálásért
+
+                grid: [$(".col-12").width() / 12, $(".col-12").width() / 12],
+                containment: "parent",
+
+            });*/
 
             $("div").disableSelection();
             console.log("működik");
