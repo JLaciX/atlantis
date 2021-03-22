@@ -28,9 +28,16 @@
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
+                    <form action="upload.php" method="post" enctype="multipart/form-data">
+                        Select image to upload:
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <input type="submit" value="Upload Image" name="submit">
+                    </form>
+
+
                 </div>
             </div>
-            <div class="container-fluid">
+            <div class="container-fluid view">
                 <div class="row">
                     <div class="col-3"> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" src="img/computer.png" alt=""> </div>
@@ -41,8 +48,54 @@
             </div>
 
         </div>
+
+        <div class="sidemenu rounded-right" id="boxmenu">
+            <div class="img-bord rounded-right"><img class="img-fluid logo" src="img/atlant.png" alt=""></div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="slidecontainer">
+
+                        <label for="boxslider" class="form-label">Example range</label>
+                        <input type="range" class="form-range" min="1" max="12" step="1" id="boxslider">
+
+                    </div>
+                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded"></div>
+                </div>
+            </div>
+
+        </div>
+
+
         <div class="container-fluid tartalom sortable">
             <div class="row"></div>
+        </div>
+        <div id="medialibrary">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="card">
+                            <h5 class="card-title">Médiatár <span class="float-right" id="closelibrary">X</span></h5>
+                            <input type="file" name="file" id="file" multiple>
+                            <div class="card-body upload-area">
+                                <p style="text-align: center;"><i class="fas fa-cloud-upload-alt" style="font-size: 60px;"></i> <br><br> Fájl feltöltés</p>
+                            </div>
+                            <ul id="tumbnail">
+                                <?php
+								$medias = $database->query("SELECT `id`, `filename`, CONCAT('uploads/', DATE_FORMAT(`upload`,'%Y/%m/'), `filename`) AS `fullpath` FROM `media` ;"); 
+
+								foreach ($medias as $media) {
+									echo '<li><img media-id="'.$media['id'].'" src="'.$media['fullpath'].'" class="img-fluid"></li>';
+								}
+								?>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -52,8 +105,10 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        var baseid = 0;
+        var currentid;
         $(function refresh() {
-            var unit = $(".col-12").width() / 12;
+            var unit = ($(".tartalom").width() - 32) / 12;
             console.log(unit);
             $(".resizable").resizable({
                 grid: unit,
@@ -68,7 +123,7 @@
 
                     ui.item.removeClass("col-6");
                     ui.item.removeClass("draggable");
-
+                    ui.item.attr('id', "0" + baseid);
                     if (ui.item.hasClass("box")) {
                         ui.item.removeClass("box");
                         ui.item.html("");
@@ -90,7 +145,7 @@
                         ui.item.addClass("sortable");
                         ui.item.addClass("resizable");
                     }
-
+                    baseid++;
                     refresh();
                 }
             });
@@ -114,6 +169,30 @@
                 containment: "parent",
 
             });*/
+            $(".coltemp").click(function() {
+
+                $(".sidemenu").html($("#boxmenu").html());
+                refresh();
+                currentid = $(this).attr('id');
+            });
+            $("[type=range]").change(function() {
+                for (let index = 0; index <= 12; index++) {
+                    $("#" + currentid).removeClass("col-" + index);
+
+                }
+                $("#" + currentid).removeAttr("style");
+                $("#" + currentid).addClass("col-" + $("input[type=range]").val());
+
+            });
+
+
+
+
+
+
+
+
+
 
             $("div").disableSelection();
             console.log("működik");

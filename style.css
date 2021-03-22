@@ -65,5 +65,34 @@
 .view {
     position: absolute;
     bottom: 0;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
+}
+
+#boxmenu {
+    display: none;
+}
+
+.slidecontainer {
+    width: 100%;
+    /* Width of the outside container */
+}
+
+#boxslider {
+    margin: auto;
+    width: 75%;
+    height: 15px;
+    background: #d3d3d3;
+    outline: none;
+    margin-bottom: -2px;
+}
+
+#boxslider::-moz-range-thumb {
+    width: 15px;
+    /* Set a specific slider handle width */
+    height: 15px;
+    /* Slider handle height */
+    background: #63CDD7;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
 }
