@@ -2,7 +2,9 @@
     background-color: #060607;
     height: 100vh;
     width: 250px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .main {
@@ -52,6 +54,12 @@
     width: calc(100% - 250px) !important;
 }
 
+#subtartalom {
+    height: 100vh;
+    width: 100%;
+    margin: auto;
+}
+
 .sub>div {
     float: left;
 }
@@ -95,4 +103,22 @@
     /* Green background */
     cursor: pointer;
     /* Cursor on hover */
+}
+
+#medialibrary {
+    display: none;
+}
+
+#picturemenu {
+    display: none;
+}
+
+.pictureselect {
+    margin: auto;
+    width: 80%;
+}
+
+.refpicture {
+    width: 10%;
+    margin-top: 5px;
 }

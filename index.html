@@ -13,26 +13,22 @@
 <body>
     <div class="main">
         <div class="topbar"></div>
-        <div class="sidemenu rounded-right">
+        <div class="sidemenu rounded-right" id="sidemain">
             <div class="img-bord rounded-right"><img class="img-fluid logo" src="img/atlant.png" alt=""></div>
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-6 widget rounded draggable">
+                    <div class="col-6 widget rounded draggable" type="picture">
                         <img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
                         <p>Fénykép</p>
                     </div>
-                    <div class="col-6 widget rounded draggable box">
+                    <div class="col-6 widget rounded draggable box" type="box">
                         <img class="img-fluid widget-ico" src="img/box.png" alt="">
                         <p>Doboz</p>
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
-                    <form action="upload.php" method="post" enctype="multipart/form-data">
-                        Select image to upload:
-                        <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="submit" value="Upload Image" name="submit">
-                    </form>
+
 
 
                 </div>
@@ -40,9 +36,9 @@
             <div class="container-fluid view">
                 <div class="row">
                     <div class="col-3"> </div>
-                    <div class="col-3"><img class="img-fluid widget-ico" src="img/computer.png" alt=""> </div>
-                    <div class="col-3"><img class="img-fluid widget-ico" src="img/tablet.png" alt=""> </div>
-                    <div class="col-3"><img class="img-fluid widget-ico" src="img/phone.png" alt=""> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" id="computer" src="img/computer.png" alt=""> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" id="tablet" src="img/tablet.png" alt=""> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" id="phone" src="img/phone.png" alt=""> </div>
 
                 </div>
             </div>
@@ -64,12 +60,50 @@
                     <div class="col-6 widget rounded"></div>
                 </div>
             </div>
+            <div class="container-fluid view">
+                <div class="row">
+
+                    <div class="col-3"><img class="img-fluid widget-ico exit" src="img/computer.png" alt=""> </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidemenu rounded-right" id="picturemenu">
+            <div class="img-bord rounded-right"><img class="img-fluid logo" src="img/atlant.png" alt=""></div>
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="container">
+                        <form method="post" action="" enctype="multipart/form-data" id="myform">
+                            <div class='preview'>
+                                <img class="img-fluid pictureselect" src="img/whiteimg.png" id="img">
+                            </div>
+                            <div>
+                                <input type="file" id="file" name="file" />
+                                <input type="button" class="button" value="Upload" id="but_upload">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded"></div>
+                </div>
+            </div>
+            <div class="container-fluid view">
+                <div class="row">
+
+                    <div class="col-3"><img class="img-fluid widget-ico exit" src="img/computer.png" alt=""> </div>
+
+                </div>
+            </div>
 
         </div>
 
 
-        <div class="container-fluid tartalom sortable">
-            <div class="row"></div>
+        <div class="container-fluid tartalom">
+            <div class="sortable" id="subtartalom"></div>
         </div>
         <div id="medialibrary">
             <div class="container-fluid">
@@ -78,18 +112,9 @@
                     <div class="col-md-10">
                         <div class="card">
                             <h5 class="card-title">Médiatár <span class="float-right" id="closelibrary">X</span></h5>
-                            <input type="file" name="file" id="file" multiple>
-                            <div class="card-body upload-area">
-                                <p style="text-align: center;"><i class="fas fa-cloud-upload-alt" style="font-size: 60px;"></i> <br><br> Fájl feltöltés</p>
-                            </div>
-                            <ul id="tumbnail">
-                                <?php
-								$medias = $database->query("SELECT `id`, `filename`, CONCAT('uploads/', DATE_FORMAT(`upload`,'%Y/%m/'), `filename`) AS `fullpath` FROM `media` ;"); 
 
-								foreach ($medias as $media) {
-									echo '<li><img media-id="'.$media['id'].'" src="'.$media['fullpath'].'" class="img-fluid"></li>';
-								}
-								?>
+
+                            <ul id="tumbnail">
                             </ul>
                         </div>
                     </div>
@@ -107,6 +132,60 @@
     <script>
         var baseid = 0;
         var currentid;
+
+
+
+        function uploadData(formdata) {
+
+            $.ajax({
+                url: 'upload.php',
+                type: 'post',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    addThumbnail(response);
+                    //visual();
+                }
+            });
+        }
+
+
+        $(document).ready(function() {
+
+            $("#but_upload").click(function() {
+
+                var fd = new FormData();
+                var files = $('#file')[0].files;
+
+                // Check file selected or not
+                if (files.length > 0) {
+                    fd.append('file', files[0]);
+
+                    $.ajax({
+                        url: 'upload.php',
+                        type: 'post',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            if (response != 0) {
+                                $("#img").attr("src", response);
+                                $(".preview img").show(); // Display image element
+                            } else {
+                                alert('file not uploaded');
+                            }
+                        },
+                    });
+                } else {
+                    alert("Please select a file.");
+                }
+            });
+        });
+
+
+
         $(function refresh() {
             var unit = ($(".tartalom").width() - 32) / 12;
             console.log(unit);
@@ -124,26 +203,36 @@
                     ui.item.removeClass("col-6");
                     ui.item.removeClass("draggable");
                     ui.item.attr('id', "0" + baseid);
+
                     if (ui.item.hasClass("box")) {
                         ui.item.removeClass("box");
                         ui.item.html("");
-                    }
-                    if ($(e.target).hasClass('col-12') && !ui.item.hasClass("coltemp")) {
-                        ui.item.removeAttr("style");
-                        ui.item.css("width", $(".col-12").width() / 12);
 
-                        ui.item.addClass("sub");
-                        ui.item.addClass("subdrag");
-                        ui.item.addClass("coltemp");
-                        ui.item.addClass("resizable");
-                    } else {
-                        if (!ui.item.hasClass("coltemp")) {
+                        if ($(e.target).hasClass('col-12') && !ui.item.hasClass("coltemp")) {
                             ui.item.removeAttr("style");
+                            ui.item.css("width", $(".col-12").width() / 12);
+
+                            ui.item.addClass("sub");
+                            ui.item.addClass("subdrag");
+                            ui.item.addClass("coltemp");
+                            ui.item.addClass("resizable");
+                        } else {
+                            if (!ui.item.hasClass("coltemp")) {
+                                ui.item.removeAttr("style");
+                            }
+                            ui.item.css("display", "table");
+                            ui.item.addClass("col-12");
+                            ui.item.addClass("sortable");
+                            ui.item.addClass("resizable");
                         }
-                        ui.item.css("display", "table");
-                        ui.item.addClass("col-12");
-                        ui.item.addClass("sortable");
-                        ui.item.addClass("resizable");
+                    }
+                    if (ui.item.attr("type") == "picture") {
+                        ui.item.addClass("picture");
+                        ui.item.html('<img class="img-fluid refpicture" src="img/whiteimg.png" > ');
+                        ui.item.removeAttr('class');
+                        ui.item.css("width", $(".col-12").width() / 12);
+                        ui.item.replaceWith($('<img id="0' + baseid + '" class="img-fluid refpicture resizable picture" src="img/whiteimg.png" >'));
+
                     }
                     baseid++;
                     refresh();
@@ -156,6 +245,7 @@
 
                 start: function(event, ui) {
                     $(ui.helper).addClass("ui-helper");
+                    $(ui.helper).attr("type", $(ui.item).attr("type"));
                 }
 
 
@@ -169,12 +259,53 @@
                 containment: "parent",
 
             });*/
+            $("#closelibrary").click(function() {
+                $("#medialibrary").hide();
+            });
+
+            $("#computer").click(function() {
+                $("#subtartalom").css("width", "100%");
+            });
+
+            $("#tablet").click(function() {
+                $("#subtartalom").css("width", "60%");
+            });
+
+            $("#phone").click(function() {
+                $("#subtartalom").css("width", "35%");
+            });
+
+            $(".close").click(function() {
+                $("#medialibrary").hide();
+                $("#" + currentid).attr("src", $(this).attr("src"));
+                $(".pictureselect").attr("src", $(this).attr("src"));
+            });
+
             $(".coltemp").click(function() {
 
-                $(".sidemenu").html($("#boxmenu").html());
+                $("#boxmenu").show();
+                $("#sidemain").hide();
                 refresh();
                 currentid = $(this).attr('id');
             });
+
+            $(".picture").click(function() {
+                $("#sidemain").hide();
+                $("#boxmenu").hide();
+                $("#picturemenu").show();
+                currentid = $(this).attr('id');
+                $(".pictureselect").attr("src", $("#" + currentid).attr("src"));
+
+            });
+
+            $(".exit").click(function() {
+                $("#sidemain").show();
+                $("#boxmenu").hide();
+                $("#picturemenu").hide();
+            });
+
+
+
             $("[type=range]").change(function() {
                 for (let index = 0; index <= 12; index++) {
                     $("#" + currentid).removeClass("col-" + index);
@@ -185,7 +316,19 @@
 
             });
 
+            $(".pictureselect").click(function() {
 
+                $("#medialibrary").show();
+                $.ajax({
+                    url: "medialibrary.php",
+                }).done(function(adatok) {
+                    $("#tumbnail").html("");
+                    //$("#foldervisual").html(adatok);
+                    $("#tumbnail").append(adatok);
+                    refresh();
+                });
+
+            });
 
 
 
