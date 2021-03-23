@@ -18,11 +18,11 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-6 widget rounded draggable" type="picture">
+                    <div class="col-6 widget rounded draggabletext" type="picture">
                         <img class="img-fluid widget-ico" src="img/whiteimg.png" alt="">
                         <p>Fénykép</p>
                     </div>
-                    <div class="col-6 widget rounded draggable box" type="box">
+                    <div class="col-6 widget rounded draggable box" type="box" id="box">
                         <img class="img-fluid widget-ico" src="img/box.png" alt="">
                         <p>Doboz</p>
                     </div>
@@ -31,6 +31,10 @@
                     </div>
                     <div class="col-6 widget rounded draggabletext" type="headtext">
                         <p>Címsor</p>
+                    </div>
+                    <div class="col-6 widget test" type="box">
+                        <img class="img-fluid widget-ico" src="img/box.png" alt="">
+                        <p>Doboz</p>
                     </div>
 
 
@@ -133,7 +137,7 @@
 
 
         <div class="container-fluid tartalom">
-            <div class="sortable" id="subtartalom"></div>
+            <div class="sortable container-fluid subtartalom" id="subtartalom"></div>
         </div>
         <div id="medialibrary">
             <div class="container-fluid">
@@ -162,7 +166,7 @@
     <script>
         var baseid = 0;
         var currentid;
-
+        var submove = false;
 
 
         function uploadData(formdata) {
@@ -235,6 +239,14 @@
 
                     if (ui.item.attr("type") == "headtext") {
                         ui.item.replaceWith($('<h1 class="headtext"  id="0' + baseid + '">szöveg<h1>'));
+
+                    }
+                    if (ui.item.attr("type") == "picture") {
+                        ui.item.replaceWith($('<img id="0' + baseid + '" class="img-fluid refpicture resizable picture" src="img/whiteimg.png" >'));
+
+                    }
+                    if (ui.item.attr("type") == "box") {
+                        ui.item.replaceWith($('<div class="widget sub col-1 resizable coltemp" id="0' + baseid + '"><div>'));
 
                     }
                     refresh();
@@ -322,20 +334,37 @@
                 containment: "parent",
 
             });*/
+            $(".test").one('click', function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+
+                if (submove == false) {
+                    $("#box").removeClass("draggable");
+                    $("#box").addClass("draggabletext");
+                    submove = true;
+                } else {
+                    $("#box").removeClass("draggabletext");
+                    $("#box").addClass("draggable");
+                    submove = false;
+                }
+
+                refresh();
+            });
+
             $("#closelibrary").click(function() {
                 $("#medialibrary").hide();
             });
 
             $("#computer").click(function() {
-                $("#subtartalom").css("width", "100%");
+                $(".subtartalom").css("width", "100%");
             });
 
             $("#tablet").click(function() {
-                $("#subtartalom").css("width", "60%");
+                $(".subtartalom").css("width", "60%");
             });
 
             $("#phone").click(function() {
-                $("#subtartalom").css("width", "35%");
+                $(".subtartalom").css("width", "35%");
             });
 
             $(".close").click(function() {
@@ -418,7 +447,7 @@
 
             });
 
-            $(".pictureselect").click(function() {
+            $(".pictureselect").one('click', function() {
 
                 $("#medialibrary").show();
                 $.ajax({
