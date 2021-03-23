@@ -234,10 +234,11 @@
                     }
 
                     if (ui.item.attr("type") == "headtext") {
-                        ui.item.replaceWith($('<h1 class="text"  id="0' + baseid + '">szöveg<h1>'));
+                        ui.item.replaceWith($('<h1 class="headtext"  id="0' + baseid + '">szöveg<h1>'));
 
                     }
                     refresh();
+                    baseid++;
                 }
             });
 
@@ -381,6 +382,7 @@
             });
 
             $(".headtext").click(function(e) {
+
                 e.stopPropagation();
                 $("#sidemain").hide();
                 $("#boxmenu").hide();
