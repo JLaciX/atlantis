@@ -26,8 +26,12 @@
                         <img class="img-fluid widget-ico" src="img/box.png" alt="">
                         <p>Doboz</p>
                     </div>
-                    <div class="col-6 widget rounded"></div>
-                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded draggabletext" type="text">
+                        <p>Szöveg</p>
+                    </div>
+                    <div class="col-6 widget rounded draggabletext" type="headtext">
+                        <p>Címsor</p>
+                    </div>
 
 
 
@@ -87,6 +91,32 @@
                             </div>
                         </form>
                     </div>
+                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded"></div>
+                </div>
+            </div>
+            <div class="container-fluid view">
+                <div class="row">
+
+                    <div class="col-3"><img class="img-fluid widget-ico exit" src="img/computer.png" alt=""> </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidemenu rounded-right" id="textmenu">
+            <div class="img-bord rounded-right"><img class="img-fluid logo" src="img/atlant.png" alt=""></div>
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <form action="">
+                        <div class="form-group">
+                            <label for="textarea">Example textarea</label>
+                            <textarea class="form-control" id="textarea" rows="3"></textarea>
+                        </div>
+                    </form>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
                 </div>
@@ -195,6 +225,22 @@
 
 
             });
+
+            $(".coltemp").sortable({
+                stop: function(e, ui) {
+                    if (ui.item.attr("type") == "text") {
+                        ui.item.replaceWith($('<p class="text" id="0' + baseid + '">szöveg<p>'));
+
+                    }
+
+                    if (ui.item.attr("type") == "headtext") {
+                        ui.item.replaceWith($('<h1 class="text"  id="0' + baseid + '">szöveg<h1>'));
+
+                    }
+                    refresh();
+                }
+            });
+
             $(".sortable").sortable({
                 //revert: true,
                 connectWith: ".column",
@@ -213,15 +259,16 @@
                             ui.item.css("width", $(".col-12").width() / 12);
 
                             ui.item.addClass("sub");
-                            ui.item.addClass("subdrag");
+                            ui.item.addClass("col-1");
                             ui.item.addClass("coltemp");
                             ui.item.addClass("resizable");
                         } else {
                             if (!ui.item.hasClass("coltemp")) {
                                 ui.item.removeAttr("style");
                             }
-                            ui.item.css("display", "table");
+                            //ui.item.css("display", "table");
                             ui.item.addClass("col-12");
+                            ui.item.addClass("row");
                             ui.item.addClass("sortable");
                             ui.item.addClass("resizable");
                         }
@@ -229,9 +276,9 @@
                     if (ui.item.attr("type") == "picture") {
                         ui.item.addClass("picture");
                         ui.item.html('<img class="img-fluid refpicture" src="img/whiteimg.png" > ');
-                        ui.item.removeAttr('class');
-                        ui.item.css("width", $(".col-12").width() / 12);
-                        ui.item.replaceWith($('<img id="0' + baseid + '" class="img-fluid refpicture resizable picture" src="img/whiteimg.png" >'));
+                        // ui.item.removeAttr('class');
+                        // ui.item.css("width", $(".col-12").width() / 12);
+                        ui.item.replaceWith($('<div class="col-1 widget"><img id="0' + baseid + '" class="img-fluid refpicture resizable picture" src="img/whiteimg.png" ></div>'));
 
                     }
                     baseid++;
@@ -240,6 +287,21 @@
             });
             $(".draggable").draggable({
                 connectToSortable: ".sortable",
+
+                helper: "clone",
+                //revert: "invalid", ez felel az animálásért
+
+                start: function(event, ui) {
+                    $(ui.helper).addClass("ui-helper");
+                    $(ui.helper).attr("type", $(ui.item).attr("type"));
+                }
+
+
+            });
+
+            $(".draggabletext").draggable({
+                connectToSortable: ".coltemp",
+
                 helper: "clone",
                 //revert: "invalid", ez felel az animálásért
 
@@ -281,15 +343,19 @@
                 $(".pictureselect").attr("src", $(this).attr("src"));
             });
 
-            $(".coltemp").click(function() {
+            $(".coltemp").click(function(e) {
 
+                $("#picturemenu").hide();
                 $("#boxmenu").show();
                 $("#sidemain").hide();
-                refresh();
+
                 currentid = $(this).attr('id');
+                // refresh();
+                e.stopPropagation();
             });
 
-            $(".picture").click(function() {
+            $(".picture").click(function(e) {
+                e.stopPropagation();
                 $("#sidemain").hide();
                 $("#boxmenu").hide();
                 $("#picturemenu").show();
@@ -298,10 +364,44 @@
 
             });
 
+            $(".text").click(function(e) {
+                e.stopPropagation();
+                $("#sidemain").hide();
+                $("#boxmenu").hide();
+                $("#picturemenu").hide();
+                currentid = $(this).attr('id');
+                $("#textarea").val($("#" + currentid).text());
+                $("#textmenu").show();
+                $("#textarea").on("change paste keyup", function() {
+                    // alert($(this).val());
+                    $("#" + currentid).text($(this).val());
+
+                });
+
+            });
+
+            $(".headtext").click(function(e) {
+                e.stopPropagation();
+                $("#sidemain").hide();
+                $("#boxmenu").hide();
+                $("#picturemenu").hide();
+                currentid = $(this).attr('id');
+                $("#textarea").val($("#" + currentid).text());
+                $("#textmenu").show();
+                $("#textarea").on("change paste keyup", function() {
+                    // alert($(this).val());
+                    $("#" + currentid).text($(this).val());
+
+                });
+
+            });
+
+
             $(".exit").click(function() {
                 $("#sidemain").show();
                 $("#boxmenu").hide();
                 $("#picturemenu").hide();
+                $("#textmenu").hide();
             });
 
 
