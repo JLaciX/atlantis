@@ -123,6 +123,13 @@
                                 <input type="button" class="button" value="Upload" id="html_upload">
                             </div>
                         </form>
+                        <form method="post" action="" enctype="multipart/form-data" id="myform">
+
+                            <div>
+                                <input type="text" id="urlfile" name="file" />
+                                <input type="button" class="button" value="Upload" id="url_upload">
+                            </div>
+                        </form>
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
@@ -249,14 +256,24 @@
                 }
             });
 
+
+        });
+
+
+
+        $(function refresh() {
+            var unit = ($(".tartalom").width() - 32) / 12;
+            console.log(unit);
+            $(".resizable").resizable({
+                grid: unit,
+                // containment: ".col-12",
+
+
+            });
+
+
             $("#html_upload").click(function() {
-                if ($("#htmlfile").val().indexOf(".html") != -1) {
-                    $(".tartalom").load("templates/elmelet.html");
-                }
-                if ($("#htmlfile").val().indexOf(".css") != -1) {
-                    $('head').append(' <link rel="stylesheet" href="templates/' + $("#htmlfile").val().replace(/C:\\fakepath\\/i, '') + '">');
-                }
-                refresh();
+
                 var fd = new FormData();
                 var files = $('#htmlfile')[0].files;
 
@@ -275,20 +292,56 @@
                 } else {
                     alert("Please select a file.");
                 }
+                if ($("#htmlfile").val().indexOf(".html") != -1) {
+                    $(".tartalom").load("templates/" + $("#htmlfile").val().replace(/C:\\fakepath\\/i, ''));
+                    alert($("#htmlfile").val().replace(/C:\\fakepath\\/i, ''));
+                }
+                if ($("#htmlfile").val().indexOf(".css") != -1) {
+                    $('head').append(' <link rel="stylesheet" href="templates/' + $("#htmlfile").val().replace(/C:\\fakepath\\/i, '') + '">');
+                }
+                refresh();
             });
-        });
+
+            $("#url_upload").click(function() {
 
 
 
-        $(function refresh() {
-            var unit = ($(".tartalom").width() - 32) / 12;
-            console.log(unit);
-            $(".resizable").resizable({
-                grid: unit,
-                // containment: ".col-12",
+                // Check file selected or not
+                var x = $("#urlfile").val();
+
+                /* $.ajax({
+                     url: 'htmlupload.php',
+                     type: 'post',
+                     dataType: "json",
+                     data: {
+                         x: x
+                     },
+
+
+                 });*/
+
+                alert(x);
+                $.ajax({
+                    url: "grabber.php",
+                    type: 'post',
+                    data: {
+                        x: x
+                    },
+                }).done(function(adatok) {
+
+                    //$("#foldervisual").html(adatok);
+                    $("#elder").html(adatok);
+
+                    /* $('#response').load('grabber.php?url=' + contentURI);
+                     var contentURI = 'http://domain.com #element'; // URL TO GRAB + # of any desired element // if needed :)
+                     $('#elder').load('grabber.php?url=' + contentURI);
+                     alert(adatok);*/
+                    refresh();
+                });
 
 
             });
+
 
             $(".coltemp").sortable({
                 stop: function(e, ui) {
@@ -414,7 +467,7 @@
                 refresh();
             });
 
-            $("#elder").one('click', "div", function(e) {
+            $("#elder").one('click', "div, section", function(e) {
                 e.stopImmediatePropagation();
                 e.preventDefault();
                 if (kesz == true) {
@@ -567,7 +620,6 @@
                 });
 
             });
-
 
 
 
