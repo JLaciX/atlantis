@@ -254,9 +254,9 @@
                     $(".tartalom").load("templates/elmelet.html");
                 }
                 if ($("#htmlfile").val().indexOf(".css") != -1) {
-                    $('head').append(' <link rel="stylesheet" href=templates/"' + $("#htmlfile").val() + '">');
+                    $('head').append(' <link rel="stylesheet" href="templates/' + $("#htmlfile").val().replace(/C:\\fakepath\\/i, '') + '">');
                 }
-
+                refresh();
                 var fd = new FormData();
                 var files = $('#htmlfile')[0].files;
 
