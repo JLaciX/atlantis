@@ -217,7 +217,7 @@
 
 
         $(document).ready(function() {
-            $(".tartalom").load("templates/elmelet.html");
+
 
 
             $("#but_upload").click(function() {
@@ -250,6 +250,12 @@
             });
 
             $("#html_upload").click(function() {
+                if ($("#htmlfile").val().indexOf(".html") != -1) {
+                    $(".tartalom").load("templates/elmelet.html");
+                }
+                if ($("#htmlfile").val().indexOf(".css") != -1) {
+                    $('head').append(' <link rel="stylesheet" href=templates/"' + $("#htmlfile").val() + '">');
+                }
 
                 var fd = new FormData();
                 var files = $('#htmlfile')[0].files;
@@ -533,6 +539,7 @@
                 $("#boxmenu").hide();
                 $("#picturemenu").hide();
                 $("#textmenu").hide();
+                $("#htmlmenu").hide();
             });
 
 
