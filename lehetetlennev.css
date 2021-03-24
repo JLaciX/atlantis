@@ -1,0 +1,141 @@
+body {
+    background-color: transparent !important;
+}
+
+.sidemenu {
+    background-color: #060607;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.main {
+    /*  background-color: #06BAC5;*/
+    width: 100%;
+    min-height: 100vh;
+    /*background-color: grey;*/
+}
+
+.logo {
+    display: block;
+    margin: auto;
+    height: 70px !important;
+}
+
+.img-bord {
+    padding-bottom: 20px;
+}
+
+.widget {
+    min-height: 100px !important;
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.img-icon {
+    height: 50px !important;
+}
+
+.widget-ico {
+    height: 40px !important;
+    margin: 10px auto 5px auto;
+    display: block;
+}
+
+.widget p {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tartalom {
+    position: absolute;
+    left: 250px;
+    top: 0px;
+    height: 100vh;
+    width: calc(100% - 250px) !important;
+}
+
+#subtartalom {
+    height: 100vh;
+    width: 100%;
+    margin: auto;
+    overflow: auto;
+}
+
+.sub>div {
+    float: left;
+}
+
+.sub {
+    float: left;
+}
+
+.sizeable {}
+
+.view {
+    position: absolute;
+    bottom: 0;
+    /*border: 1px solid red;*/
+}
+
+#boxmenu {
+    display: none;
+}
+
+.slidecontainer {
+    width: 100%;
+    /* Width of the outside container */
+}
+
+#boxslider {
+    margin: auto;
+    width: 75%;
+    height: 15px;
+    background: #d3d3d3;
+    outline: none;
+    margin-bottom: -2px;
+}
+
+#boxslider::-moz-range-thumb {
+    width: 15px;
+    /* Set a specific slider handle width */
+    height: 15px;
+    /* Slider handle height */
+    background: #63CDD7;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+#medialibrary {
+    display: none;
+}
+
+#picturemenu {
+    display: none;
+}
+
+.pictureselect {
+    margin: auto;
+    width: 80%;
+}
+
+.refpicture {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.text {
+    word-wrap: break-word;
+}
+
+.headtext {
+    word-wrap: break-word;
+}
+
+#textmenu {
+    display: none;
+}

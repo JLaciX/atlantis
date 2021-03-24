@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="lehetetlennev.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <title>Atlantisz CMS</title>
@@ -43,7 +43,7 @@
             </div>
             <div class="container-fluid view">
                 <div class="row">
-                    <div class="col-3"> </div>
+                    <div class="col-3"><img class="img-fluid widget-ico" id="kesz" src="img/phone.png" alt=""> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" id="computer" src="img/computer.png" alt=""> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" id="tablet" src="img/tablet.png" alt=""> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" id="phone" src="img/phone.png" alt=""> </div>
@@ -109,6 +109,35 @@
 
         </div>
 
+        <div class="sidemenu rounded-right" id="htmlmenu">
+            <div class="img-bord rounded-right"><img class="img-fluid logo" src="img/atlant.png" alt=""></div>
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="container">
+                        <form method="post" action="" enctype="multipart/form-data" id="myform">
+
+                            <div>
+                                <input type="file" id="htmlfile" name="file" />
+                                <input type="button" class="button" value="Upload" id="html_upload">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6 widget rounded"></div>
+                    <div class="col-6 widget rounded"></div>
+                </div>
+            </div>
+            <div class="container-fluid view">
+                <div class="row">
+
+                    <div class="col-3"><img class="img-fluid widget-ico exit" src="img/computer.png" alt=""> </div>
+
+                </div>
+            </div>
+
+        </div>
+
         <div class="sidemenu rounded-right" id="textmenu">
             <div class="img-bord rounded-right"><img class="img-fluid logo" src="img/atlant.png" alt=""></div>
 
@@ -136,8 +165,8 @@
         </div>
 
 
-        <div class="container-fluid tartalom">
-            <div class="sortable container-fluid subtartalom" id="subtartalom"></div>
+        <div class="container-fluid tartalom" id="elder">
+            <!-- <div class="sortable container-fluid" id="subtartalom"></div>-->
         </div>
         <div id="medialibrary">
             <div class="container-fluid">
@@ -167,6 +196,7 @@
         var baseid = 0;
         var currentid;
         var submove = false;
+        var kesz = true;
 
 
         function uploadData(formdata) {
@@ -187,6 +217,8 @@
 
 
         $(document).ready(function() {
+            $(".tartalom").load("templates/elmelet.html");
+
 
             $("#but_upload").click(function() {
 
@@ -211,6 +243,28 @@
                                 alert('file not uploaded');
                             }
                         },
+                    });
+                } else {
+                    alert("Please select a file.");
+                }
+            });
+
+            $("#html_upload").click(function() {
+
+                var fd = new FormData();
+                var files = $('#htmlfile')[0].files;
+
+                // Check file selected or not
+                if (files.length > 0) {
+                    fd.append('file', files[0]);
+
+                    $.ajax({
+                        url: 'htmlupload.php',
+                        type: 'post',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+
                     });
                 } else {
                     alert("Please select a file.");
@@ -261,7 +315,10 @@
 
                     ui.item.removeClass("col-6");
                     ui.item.removeClass("draggable");
-                    ui.item.attr('id', "0" + baseid);
+                    if (ui.item.attr("id") == null) {
+                        ui.item.attr('id', "0" + baseid);
+                    }
+
 
                     if (ui.item.hasClass("box")) {
                         ui.item.removeClass("box");
@@ -351,6 +408,26 @@
                 refresh();
             });
 
+            $("#elder").one('click', "div", function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                if (kesz == true) {
+                    $(this).addClass("subtartalom sortable container-fluid");
+                    refresh();
+                    kesz = false;
+                }
+
+
+
+
+
+            });
+
+            $("#kesz").click(function() {
+                kesz = true;
+                $(".subtartalom").removeClass("sortable ui subtartalom");
+            });
+
             $("#closelibrary").click(function() {
                 $("#medialibrary").hide();
             });
@@ -384,22 +461,38 @@
                 e.stopPropagation();
             });
 
-            $(".picture").click(function(e) {
-                e.stopPropagation();
+            $(".subtartalom").find("img").one('click', function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                $("#temp").removeAttr('id');
+                if ($(this).attr('id') == null) {
+                    $(this).attr('id', 'temp')
+                    currentid = "temp";
+                } else {
+                    currentid = $(this).attr('id');
+                }
                 $("#sidemain").hide();
                 $("#boxmenu").hide();
                 $("#picturemenu").show();
-                currentid = $(this).attr('id');
+
                 $(".pictureselect").attr("src", $("#" + currentid).attr("src"));
 
             });
 
-            $(".text").click(function(e) {
-                e.stopPropagation();
+            $(".subtartalom").find("p").one('click', function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                $("#temp").removeAttr('id');
+                if ($(this).attr('id') == null) {
+                    $(this).attr('id', 'temp')
+                    currentid = "temp";
+                } else {
+                    currentid = $(this).attr('id');
+                }
                 $("#sidemain").hide();
                 $("#boxmenu").hide();
                 $("#picturemenu").hide();
-                currentid = $(this).attr('id');
+
                 $("#textarea").val($("#" + currentid).text());
                 $("#textmenu").show();
                 $("#textarea").on("change paste keyup", function() {
@@ -410,13 +503,20 @@
 
             });
 
-            $(".headtext").click(function(e) {
-
-                e.stopPropagation();
+            $(".subtartalom").find("h1, h2, h3, h4, h5, h6").one('click', function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                $("#temp").removeAttr('id');
+                if ($(this).attr('id') == null) {
+                    $(this).attr('id', 'temp')
+                    currentid = "temp";
+                } else {
+                    currentid = $(this).attr('id');
+                }
                 $("#sidemain").hide();
                 $("#boxmenu").hide();
                 $("#picturemenu").hide();
-                currentid = $(this).attr('id');
+
                 $("#textarea").val($("#" + currentid).text());
                 $("#textmenu").show();
                 $("#textarea").on("change paste keyup", function() {

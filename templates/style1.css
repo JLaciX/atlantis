@@ -1,0 +1,198 @@
+#kari{
+	position:relative;
+	bottom:160px;
+	left:20px;
+	margin:auto;
+	
+	
+	
+	
+}
+img{
+	
+	
+	height:100px;
+	
+	
+}
+#mainlap{
+	overflow:hidden;
+	position:relative;
+	
+	margin:auto;
+	
+	height:330px;
+	width:600px;
+	
+	
+	
+}
+#taj{
+	position:relative;
+	z-index:-1;
+	left:100px;
+	height:330px;
+	width:600px;
+
+}
+#taj2{
+	position:absolute;
+	z-index:-1;
+	left:600px;
+	height:330px;
+	width:600px;
+
+}
+#fön{
+	position:absolute;
+	z-index:0;
+	left:0px;
+	top:-330px;
+	height:330px;
+	width:600px;
+
+}
+#len{
+	position:absolute;
+	z-index:0;
+	left:0px;
+	bottom:-404px;
+	height:330px;
+	width:600px;
+
+}
+#embör2{
+	position:absolute;
+	left:20px;
+	bottom:60px;
+	z-index:0;
+	
+	
+
+}
+#sari{
+	position:absolute;
+	left:600px;
+	bottom:60px;
+	z-index:0;
+	height:200px;
+	
+	
+
+}
+#kame{
+	position:absolute;
+	left:95px;
+	bottom:40px;
+	z-index:0;
+	height:150px;
+	width:0px;
+	
+	
+
+}
+#storm{
+	position:absolute;
+	left:600px;
+	bottom:80px;
+	z-index:-1;
+	width:100px;
+	
+	
+	
+
+}
+#villam{
+	position:absolute;
+	left:600px;
+	top:-50px;
+	z-index:0;
+	height:300px;
+	
+	
+	
+
+}
+#htmlachi{
+	position:absolute;
+	left:600px;
+	z-index:0;
+	
+	
+	
+	
+
+}
+#laci{
+	position:absolute;
+	left:30px;
+	bottom:230px;
+	z-index:0;
+	font-weight: bold;
+	
+	
+	
+	
+
+}
+#demon{
+	position:absolute;
+	left:400px;
+	bottom:230px;
+	z-index:0;
+	font-weight: bold;	
+
+}
+#final{
+	position:absolute;
+	left:50px;
+	bottom:150px;
+	font-size:40px;
+	z-index:0;
+	font-weight: bold;	
+
+}
+#hatter{
+	position:absolute;
+	left:0px;
+	bottom:0px;
+	
+
+}
+#midle{
+margin: auto;
+width: 30%;
+
+}
+#midle p{
+text-align: center;
+
+
+}
+#midle a{
+	
+	text-decoration: none;
+	font-size: 30px;
+	font-weight: bold;
+	}
+
+	a:link {
+		color:black;
+	  }
+	  
+	  
+	  a:visited {
+		color: black;
+	  }
+	  
+	  
+	  a:hover {
+		color: gray;
+	  }
+	  
+	  
+	  a:active {
+		color: black;
+	  }
+
+
