@@ -482,6 +482,20 @@
 
             });
 
+            $("#elder div").on({
+                mouseenter: function(e) {
+                    //stuff to do on mouse enter
+                    e.stopPropagation();
+                    $(this).css('border', '3px solid black');
+                },
+                mouseleave: function(e) {
+                    e.stopPropagation();
+                    //stuff to do on mouse leave
+                    $(this).css('border', '0px solid red');
+                }
+
+            });
+
             $("#kesz").click(function() {
                 kesz = true;
                 $(".subtartalom").removeClass("sortable ui subtartalom");
