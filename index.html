@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <title>Atlantisz CMS</title>
+    <style>
+        .teljesenegyedi {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 
 <body>
@@ -192,12 +197,15 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <div class="card">
+                        <div class="card kepgalery">
                             <h5 class="card-title">Médiatár <span class="float-right" id="closelibrary">X</span></h5>
 
 
-                            <ul id="tumbnail">
+                            <ul>
                             </ul>
+                            <div class="container-fluid">
+                                <div class="row" id="kepgalery"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-1"></div>
@@ -354,7 +362,7 @@
 
                     //$("#foldervisual").html(adatok);
                     $("#elder").html(adatok);
-
+                    refresh();
                     /* $('#response').load('grabber.php?url=' + contentURI);
                      var contentURI = 'http://domain.com #element'; // URL TO GRAB + # of any desired element // if needed :)
                      $('#elder').load('grabber.php?url=' + contentURI);
@@ -362,7 +370,7 @@
 
                 });
 
-                refresh();
+
 
             });
 
@@ -523,17 +531,22 @@
              });*/
 
             $("#elder div").hover(function() {
-                $(this).css('border', '3px solid black');
+                if (kesz == true) {
+                    // $(this).css('border', '3px solid black');
+                    $(this).addClass('teljesenegyedi');
+                }
+
             }, function() {
-                $(this).css('border', '');
-                $(this).removeClass('active');
+                //$(this).css('border', '');
+                $(this).removeClass('teljesenegyedi');
             });
 
             $("#kesz").click(function() {
                 kesz = true;
                 $("#kesz").removeClass("btn-danger");
                 $("#kesz").addClass("btn-primary");
-                $(".subtartalom").removeClass("sortable ui subtartalom");
+                $(".subtartalom").removeClass("sortable ui subtartalom ui-sortable ui-sortable-handle");
+                $(".ui-sortable-handle").removeClass("ui-sortable-handle");
 
             });
 
@@ -701,9 +714,9 @@
                 $.ajax({
                     url: "medialibrary.php",
                 }).done(function(adatok) {
-                    $("#tumbnail").html("");
+                    $("#kepgalery").html("");
                     //$("#foldervisual").html(adatok);
-                    $("#tumbnail").append(adatok);
+                    $("#kepgalery").append(adatok);
                     refresh();
                 });
 
