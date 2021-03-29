@@ -130,6 +130,12 @@
                                 <input type="button" class="button" value="Upload" id="url_upload">
                             </div>
                         </form>
+                        <form action="">
+                            <div class="ins">
+                                <label for="textarea">Example textarea</label>
+                                <textarea class="ins" id="textareaurl" rows="3"></textarea>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
@@ -302,9 +308,10 @@
                 refresh();
             });
 
-            $("#url_upload").click(function() {
+            $("#url_upload").click(function(e) {
 
-
+                e.stopImmediatePropagation();
+                e.preventDefault();
 
                 // Check file selected or not
                 var x = $("#urlfile").val();
@@ -331,13 +338,19 @@
 
                     //$("#foldervisual").html(adatok);
                     $("#elder").html(adatok);
+                    $("#textareaurl").val($("#elder").html());
+                    $("#textareaurl").on("change paste keyup", function() {
+                        // alert($(this).val());
+                        $("#elder").html($(this).val());
 
+                    });
                     /* $('#response').load('grabber.php?url=' + contentURI);
                      var contentURI = 'http://domain.com #element'; // URL TO GRAB + # of any desired element // if needed :)
                      $('#elder').load('grabber.php?url=' + contentURI);
                      alert(adatok);*/
 
                 });
+
                 refresh();
 
             });
@@ -454,7 +467,7 @@
                 e.stopImmediatePropagation();
                 e.preventDefault();
 
-                if (submove == false) {
+                /*if (submove == false) {
                     $("#box").removeClass("draggable");
                     $("#box").addClass("draggabletext");
                     submove = true;
@@ -462,8 +475,8 @@
                     $("#box").removeClass("draggabletext");
                     $("#box").addClass("draggable");
                     submove = false;
-                }
-
+                }*/
+                download("atlantis.html", $("#elder").html())
                 refresh();
             });
 
@@ -482,23 +495,31 @@
 
             });
 
-            $("#elder div").on({
-                mouseenter: function(e) {
-                    //stuff to do on mouse enter
-                    e.stopPropagation();
-                    $(this).css('border', '3px solid black');
-                },
-                mouseleave: function(e) {
-                    e.stopPropagation();
-                    //stuff to do on mouse leave
-                    $(this).css('border', '0px solid red');
-                }
+            /* $("#elder div").on({
+                 mouseenter: function(e) {
+                     //stuff to do on mouse enter
+                     e.stopPropagation();
+                     $(this).css('border', '3px solid black');
+                 },
+                 mouseleave: function(e) {
+                     e.stopPropagation();
+                     //stuff to do on mouse leave
+                     $(this).css('border', '0px solid red');
+                 }
 
+             });*/
+
+            $("#elder div").hover(function() {
+                $(this).css('border', '3px solid black');
+            }, function() {
+                $(this).css('border', '');
+                $(this).removeClass('active');
             });
 
             $("#kesz").click(function() {
                 kesz = true;
                 $(".subtartalom").removeClass("sortable ui subtartalom");
+
             });
 
             $("#closelibrary").click(function() {
@@ -644,6 +665,19 @@
             $("div").disableSelection();
             console.log("működik");
         });
+
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
     </script>
 </body>
 
