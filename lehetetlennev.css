@@ -9,6 +9,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 100000;
 }
 
 .main {
@@ -110,10 +111,12 @@ body {
 
 #medialibrary {
     display: none;
+    z-index: 100000;
 }
 
 #picturemenu {
     display: none;
+    z-index: 100000;
 }
 
 .pictureselect {
@@ -136,10 +139,12 @@ body {
 
 #textmenu {
     display: none;
+    z-index: 100000;
 }
 
 #htmlmenu {
     display: none;
+    z-index: 100000;
 }
 
 #textareaurl {
