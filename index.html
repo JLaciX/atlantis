@@ -32,9 +32,18 @@
                     <div class="col-6 widget rounded draggabletext" type="headtext">
                         <p>Címsor</p>
                     </div>
-                    <div class="col-6 widget test" type="box">
-                        <img class="img-fluid widget-ico" src="img/box.png" alt="">
-                        <p>Doboz</p>
+                    <div class="col-12 widget" type="box">
+                        <div>
+                            <button type="button" id="htmlmenubutton" class="btn btn-primary btn-block menubutton">Sablon feltöltés</button>
+                            <button type="button" id="sourcebutton" class="btn btn-primary btn-block menubutton">Forráskód nézet</button>
+                            <button type="button" id="kesz" class="btn btn-primary btn-block menubutton">Adott szerkesztés befejezése</button>
+                            <button type="button" id="downloadfile" class="btn btn-success btn-block menubutton">Módosított fájl letöltése</button>
+                        </div>
+
+                    </div>
+                    <div class="col-12 widget test" type="box">
+
+
                     </div>
 
 
@@ -43,7 +52,7 @@
             </div>
             <div class="container-fluid view">
                 <div class="row">
-                    <div class="col-3"><img class="img-fluid widget-ico" id="kesz" src="img/phone.png" alt=""> </div>
+                    <div class="col-3"> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" id="computer" src="img/computer.png" alt=""> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" id="tablet" src="img/tablet.png" alt=""> </div>
                     <div class="col-3"><img class="img-fluid widget-ico" id="phone" src="img/phone.png" alt=""> </div>
@@ -130,12 +139,7 @@
                                 <input type="button" class="button" value="Upload" id="url_upload">
                             </div>
                         </form>
-                        <form action="">
-                            <div class="ins">
-                                <label for="textarea">Example textarea</label>
-                                <textarea class="ins" id="textareaurl" rows="3"></textarea>
-                            </div>
-                        </form>
+
                     </div>
                     <div class="col-6 widget rounded"></div>
                     <div class="col-6 widget rounded"></div>
@@ -198,6 +202,16 @@
                 </div>
             </div>
         </div>
+        <div class="ins">
+            <form action="">
+                <div class="ins">
+                    <button type="button" id="sourceclose" class="btn btn-warning">X</button>
+                    <label for="textarea"></label>
+                    <textarea class="ins" id="textareaurl" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+
     </div>
 
     <script src="jquery/jquery.js"></script>
@@ -338,12 +352,7 @@
 
                     //$("#foldervisual").html(adatok);
                     $("#elder").html(adatok);
-                    $("#textareaurl").val($("#elder").html());
-                    $("#textareaurl").on("change paste keyup", function() {
-                        // alert($(this).val());
-                        $("#elder").html($(this).val());
 
-                    });
                     /* $('#response').load('grabber.php?url=' + contentURI);
                      var contentURI = 'http://domain.com #element'; // URL TO GRAB + # of any desired element // if needed :)
                      $('#elder').load('grabber.php?url=' + contentURI);
@@ -463,7 +472,7 @@
                 containment: "parent",
 
             });*/
-            $(".test").one('click', function(e) {
+            $("#downloadfile").one('click', function(e) {
                 e.stopImmediatePropagation();
                 e.preventDefault();
 
@@ -485,6 +494,8 @@
                 e.preventDefault();
                 if (kesz == true) {
                     $(this).addClass("subtartalom sortable container-fluid");
+                    $("#kesz").removeClass("btn-primary");
+                    $("#kesz").addClass("btn-danger");
                     refresh();
                     kesz = false;
                 }
@@ -518,6 +529,8 @@
 
             $("#kesz").click(function() {
                 kesz = true;
+                $("#kesz").removeClass("btn-danger");
+                $("#kesz").addClass("btn-primary");
                 $(".subtartalom").removeClass("sortable ui subtartalom");
 
             });
@@ -551,6 +564,44 @@
                 $("#sidemain").hide();
 
                 currentid = $(this).attr('id');
+                // refresh();
+                e.stopPropagation();
+            });
+
+            $("#htmlmenubutton").click(function(e) {
+
+                $("#picturemenu").hide();
+                $("#boxmenu").hide();
+                $("#sidemain").hide();
+                $("#htmlmenu").show();
+
+
+                // refresh();
+                e.stopPropagation();
+            });
+
+            $("#sourcebutton").click(function(e) {
+
+
+                $(".ins").show();
+                $("#textareaurl").val($("#elder").html());
+                $("#textareaurl").on("change paste keyup", function() {
+                    // alert($(this).val());
+                    $("#elder").html($(this).val());
+
+                });
+
+
+                // refresh();
+                e.stopPropagation();
+            });
+
+            $("#sourceclose").click(function(e) {
+
+
+                $(".ins").hide();
+
+
                 // refresh();
                 e.stopPropagation();
             });

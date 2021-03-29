@@ -138,6 +138,33 @@ body {
     display: none;
 }
 
-.active {
-    border: 1px solid red !important;
+#htmlmenu {
+    display: none;
+}
+
+#textareaurl {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000000;
+    height: 260px;
+}
+
+.ins {
+    display: none;
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000000;
+    height: 300px;
+}
+
+.menubutton {
+    margin-top: 10px;
+}
+
+#sourceclose {
+    float: right;
 }
