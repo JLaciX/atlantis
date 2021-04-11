@@ -594,7 +594,6 @@
 
             $("#sourcebutton").click(function(e) {
 
-
                 $(".ins").show();
                 $("#textareaurl").val($("#elder").html());
                 $("#textareaurl").on("change paste keyup", function() {
@@ -602,9 +601,6 @@
                     $("#elder").html($(this).val());
 
                 });
-
-
-                // refresh();
                 e.stopPropagation();
             });
 
